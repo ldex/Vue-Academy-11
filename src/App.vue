@@ -6,7 +6,9 @@
       <router-link to="/products">Products</router-link>
       <router-link to="/about">About</router-link>
     </nav>
-    <router-view/>
+    <transition name="page" mode="out-in">
+      <router-view/>
+    </transition>
     <hr />
     <footer>Copyright Vue Academy 2020</footer>
   </div>
@@ -173,4 +175,30 @@ nav a.router-link-exact-active {
 *[disabled] {
   cursor: not-allowed;
 }
+
+/* transitions */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+@keyframes acrossIn {
+  0% { transform: translate3d(-100%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+ 
+@keyframes acrossOut {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(100%, 0, 0); }
+}
+
+.page-enter-active {
+  animation: bounceIn .45s ease-out both;
+} 
+ 
+.page-leave-active {
+  animation: flipOutX .65s ease-in both;
+} 
 </style>

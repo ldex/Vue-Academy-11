@@ -4,10 +4,16 @@
             {{error.message}}
         </section>
         <section v-else>
-        <div v-if="loading">
-            <h2>Loading products...</h2>
-        </div>
-        <product-list v-else :products="products" :page-size="5"></product-list>
+          <div v-if="loading">
+              <h2>Loading products...</h2>
+          </div>
+          <product-list v-else :products="products" :page-size="5">
+              <template v-slot="slotProps">
+                <span class="name">{{ slotProps.product.name | uppercase }}</span>
+                <span class="description">{{ slotProps.product.description | capitalize }}</span>
+                <span class="price">{{ slotProps.product.price | currency('$', 2, { symbolOnLeft: false }) }}</span>
+              </template>
+          </product-list>
         </section>
     </div>
 </template>

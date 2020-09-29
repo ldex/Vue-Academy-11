@@ -10,14 +10,17 @@
         </fieldset>
         <ul class="products">
             <li v-for="product in sortedFilteredPaginatedProducts" v-bind:key="product.id"
-                v-bind:class='{ discontinued: product.discontinued, selected: product === selectedProduct }'
-                @click="selectedProduct = product"
+                :class='{ discontinued: product.discontinued, selected: product === selectedProduct }'
+                @click="onSelect(product)"
                 :title="JSON.stringify(product)">
-                <span class="name">{{ product.name }}</span>
-                <span class="description">{{ product.description }}</span>
-                <span class="price">{{ product.price }}</span>
+                <slot :product="product">
+                  {{ product.name }}
+                </slot>
             </li>
         </ul>
+        <div class="right">
+          <router-link to="/product/insert">Create new product</router-link>
+        </div>
         <button @click="prevPage" :disabled="pageNumber === 1">
           &lt; Previous
         </button>
@@ -25,17 +28,14 @@
         <button @click="nextPage" :disabled="pageNumber >= pageCount">
           Next &gt;
         </button>
-        <product-details :product="selectedProduct"></product-details>
     </div>
 </template>
 
 <script>
-    import ProductDetails from '@/components/ProductDetails.vue';
-
     export default {
         components: {
-            ProductDetails,
         },
+        mixins: [],
         props: {
             products: {
                 type: Array,
@@ -55,6 +55,7 @@
                 sortName: 'modifiedDate',
                 sortDir: 'desc',
                 pageNumber: 1,
+                componentName: 'Product List',
             }
         },
         computed: {
@@ -97,6 +98,9 @@
           }
         },
         methods: {
+          onSelect(product) {
+            this.$router.push({ name: "product", params: { id: product.id } });
+          },
           sort:function(s) {
             //if s == current sort, reverse order
             if(s === this.sortName) {
