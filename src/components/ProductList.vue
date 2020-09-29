@@ -21,13 +21,13 @@
         <div class="right">
           <router-link to="/product/insert">Create new product</router-link>
         </div>
-        <button @click="prevPage" :disabled="pageNumber === 1">
+        <v-btn @click="prevPage" :disabled="pageNumber === 1">
           &lt; Previous
-        </button>
+        </v-btn>
         Page {{ pageNumber }}
-        <button @click="nextPage" :disabled="pageNumber >= pageCount">
+        <v-btn @click="nextPage" :disabled="pageNumber >= pageCount">
           Next &gt;
-        </button>
+        </v-btn>
     </div>
 </template>
 

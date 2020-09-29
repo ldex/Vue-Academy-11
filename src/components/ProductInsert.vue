@@ -87,7 +87,6 @@
 </template>
 
 <script>
-import ProductService from '@/services/ProductService.js';
 import { required, minLength, maxLength, between } from 'vuelidate/lib/validators'
 
 const validUrlRegex = /^(https?:\/\/[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,5}(?:\/\S*)?(?:[-A-Za-z0-9+&@#/%?=~_|!:,.;])+\.(?:jpg|jpeg|gif|png))$/g;
@@ -143,7 +142,7 @@ export default {
           fixedPrice: this.product.fixedPrice
         };
         console.log(newProduct);
-        ProductService.insertProduct(newProduct)
+        this.$store.dispatch('addProduct', newProduct)
           .then(() => {
             this.$router.push({ name: "products" });
           })
